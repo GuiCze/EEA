@@ -1,10 +1,10 @@
-import User from "../models/user-model.js";
+import Cliente from "../models/cliente-model.js";
 import bcrypt from "bcrypt";
 import jwtService from "../services/jwt-service.js";
 
 const store = async (req,res)=>{
     try{
-    const connect = await User.create(req.body)
+    const connect = await Cliente.create(req.body)
     res.status(201).json(connect)
     }catch(err){
         res.status(400).send(err);
@@ -13,7 +13,7 @@ const store = async (req,res)=>{
 
 const index = async (req,res)=>{
     try{
-        const connect = await User.find()
+        const connect = await Cliente.find()
         res.status(200).json(connect)
     }catch(err){
         res.status(400).send(err);
@@ -22,7 +22,7 @@ const index = async (req,res)=>{
 
 const show = async (req,res)=>{
     try{
-        const connect = await User.findById(req.params.id)
+        const connect = await Cliente.findById(req.params.id)
         res.status(200).json(connect)
     }catch(err){
         res.status(400).send(err);
@@ -31,8 +31,17 @@ const show = async (req,res)=>{
 
 const update = async (req,res)=>{
     try{
-        const connect = await User.findByIdAndUpdate(req.params.id, req.body, {new: true})
+        const connect = await Cliente.findByIdAndUpdate(req.params.id, req.body, {new: true})
         res.status(200).json(connect)
+    }catch(err){
+        res.status(400).send(err);
+    }
+}
+
+const salve = async (req,res)=>{
+    try{
+    const connect = await Cliente.create(req.body)
+    res.status(201).json(connect)
     }catch(err){
         res.status(400).send(err);
     }
@@ -40,7 +49,7 @@ const update = async (req,res)=>{
 
 const destroy = async (req,res)=>{
     try{
-        const connect = await User.findByIdAndDelete(req.params.id)
+        const connect = await Cliente.findByIdAndDelete(req.params.id)
         res.status(200).json(connect)
     }catch(err){
         res.status(400).send(err);
@@ -49,19 +58,19 @@ const destroy = async (req,res)=>{
 
 const login = async (req,res)=>{
     try{
-        const user = await User.findOne({
+        const cliente = await Cliente.findOne({
             email: req.body.email,
         })
-        if(!user){
+        if(!cliente){
             return res.status(404).send("Não encontrado")
         }
         
-        if(await bcrypt.compare(req.body.senha, user.senha)){
+        if(await bcrypt.compare(req.body.senha, cliente.senha)){
           
             const token = jwtService.generateAccessToken({
-                permissao: user.permissao,
-                email: user.email,
-                _id: user._id,
+                permissao: "USU",
+                email: cliente.email,
+                _id: cliente._id,
             });
             res.status(200).json({token});
         } else {
@@ -75,7 +84,7 @@ const login = async (req,res)=>{
 
 const register = async (req,res)=>{
     try{
-        const connect = await User.create({
+        const connect = await Cliente.create({
             email: req.body.email,
             senha: req.body.senha,
             nome: req.body.nome,

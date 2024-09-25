@@ -6,6 +6,7 @@ const router = express.Router()
 
 router.get('/', check_token, agendamento.index)
 router.get('/:id',check_token, agendamento.show)
+router.get('/agenda/:id',check_token, agendamento.meu_agendamento)
 router.post('/',check_token,check_role(["ADM","REC"]), agendamento.store)
 router.put('/:id',check_token, check_role(["ADM","REC"]), agendamento.update)
 router.delete('/:id',check_token, check_role(["ADM","REC"]), agendamento.destroy)

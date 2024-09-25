@@ -18,6 +18,15 @@ const index = async (req,res)=>{
     }
 }
 
+const meu_agendamento = async (req,res)=>{
+    try{
+        const connect = await Agendamento.findById(req.params.id).populate("cliente_id").populate("animal_id")
+        res.status(200).json(connect)
+    }catch(err){
+        console.log(err);
+    }
+}
+
 const show = async (req,res)=>{
     try{
         const connect = await Agendamento.findById(req.params.id)
@@ -45,4 +54,4 @@ const destroy = async (req,res)=>{
     }
 }
 
-export default {store, index, show, update, destroy}
+export default {store, index, show, update, destroy, meu_agendamento}

@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 
 const Schema = db.Schema;
 
-const userSchema = new Schema({
+const clienteSchema = new Schema({
     nome: {
         type: String,
         required: true
@@ -16,12 +16,6 @@ const userSchema = new Schema({
     senha: {
         type: String,
         minlength: 8,
-        required: true
-    },
-    permissao: {
-        type: String,
-        enum: ["ADM", "REC", "TOSA", "USU"],
-        default: "REC",
         required: true
     },
     email: {
@@ -39,16 +33,16 @@ const userSchema = new Schema({
     }
 })
 
-userSchema.pre("save", async function(next){
+clienteSchema.pre("save", async function(next){
     const hash = await bcrypt.hash(this.senha, 10)
     this.senha = hash
     next()
 })
 
-userSchema.methods.senhaCorreta = async function (senha) {
+clienteSchema.methods.senhaCorreta = async function (senha) {
     return await bcrypt.compare(senha, this.senha);
   };
 
-const User = db.model("User", userSchema);
+const Cliente = db.model("Cliente", clienteSchema);
 
-export default User
+export default Cliente

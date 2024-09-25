@@ -10,6 +10,10 @@ const animalSchema = new Schema({
     raca: {
         type: String,
         required: true
+    },
+    especie: {
+        type: String,
+        required: true
     }
 })
 
