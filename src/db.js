@@ -1,16 +1,17 @@
 import mongoose from "mongoose";
 
-const mongoDB = "mongodb://localhost:27017/Peto"
+const connectDB = async() => {
+    try {
+        await mongoose.connect(
+            `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.CLUSTER_ADDRESS}/${process.env.DB_NAME}`
+          );
 
-const main = async () => {
-    try{
-        await mongoose.connect(mongoDB)
-        console.log("MongoDB connected")
-    }catch(err){
-        console.log(err)
+    } catch (error) {
+        console.error('Erro ao conectar ao MongoDB', error);
+
     }
-}
+};
 
-main();
+connectDB();
 
 export default mongoose;

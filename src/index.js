@@ -5,7 +5,6 @@ import User from "./routers/user-routes.js";
 import Cliente from "./routers/cliente-routes.js";
 import "dotenv/config";
 
-const port = 3000
 const app = express();
 
 app.use(express.json());-
@@ -16,5 +15,5 @@ app.use("/cliente", Cliente)
 
 
 app.listen(port, ()=>{
-    console.log(`Rodando na porta ${port}`)
+    console.log(`Rodando na porta ${process.env.API_PORT}`)
 })
