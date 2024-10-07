@@ -89,4 +89,4 @@ const register = async (req,res)=>{
 }
 
 
-export default {store, index, show, update, login, register, destroy, salve}
+export default {store, index, show, update, login, register, destroy}
