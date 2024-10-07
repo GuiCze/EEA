@@ -14,6 +14,6 @@ app.use("/user", User)
 app.use("/cliente", Cliente)
 
 
-app.listen(port, ()=>{
+app.listen(process.env.API_PORT, ()=>{
     console.log(`Rodando na porta ${process.env.API_PORT}`)
 })
